@@ -4,7 +4,7 @@
 openAiGymDemo.py
 Author: Miles Kovach
 Created: 2020-10-09
-Modified: 2020-10-11
+Modified: 2020-10-16
 EC601 Assignment big, script 0.1
 
 A program to test openAIgym
@@ -17,16 +17,19 @@ debug_mode = [] # initializing an empty array for debugging purposes
 # debug block 0 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 import gym
+import agentTypes as aty
 
 # debug block 1 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 env_name = 'CartPole-v1'
 env = gym.make(env_name)
 
+randAgnt = aty.Agent(env, 'random') # initializing an agent
+
 env.reset()
 
 for q in range(200):
-  action = env.action_space.sample()
+  action = randAgnt.get_action()
   env.step(action)
   env.render()
   
