@@ -4,7 +4,7 @@
 agentTypes.py
 Author: Miles Kovach
 Created: 2020-10-16
-Modified: 2020-10-18
+Modified: 2020-10-19
 CLASS Assignment big, script 0.1
 
 Definition for class agent, and implementation of a few types of agents.
@@ -68,3 +68,46 @@ class Agent():
                                    self.action_high, \
                                    self.action_shape)
     return action
+
+class Qagent(Agent):
+  def __init__(self, enviro, strat = 'Q',\
+               discount_rate = 0.97,\
+               learning_rate = 0.99):
+    super().__init__(enviro, strat)
+    self.state_size = enviro.observation_space.n
+    
+    self.eps = .3 # threshold for choosing a random vs policy action
+    self.DR = discount_rate
+    self.LR = learning_rate
+    self.build_model()
+    
+  def build_model(self):
+    self.q_table = 1e-4 * np.random.random([self.state_size, self.action_size])
+
+  def get_action(self, state):
+    q_state = self.q_table[state]
+    action_greedy = np.argmax(q_state)
+    action_random = super().get_action(state)
+    action = action_random if random.random() < self.eps else action_greedy
+    return action
+
+  def train(self, experience):
+    SANRD = experience
+    # a list like this:
+    # (S)tate
+    # (A)ction
+    # (N)ext state
+    # (R)eward
+    # (D)one
+
+    q_next = self.q_table[SANRD[2]]
+    if SANRD[4]:
+      q_next = np.zeros([self.action_size]) 
+    q_target = SANRD[3] + self.DR * np.max(q_next)
+    # adjusting q-table propotionally to the difference between reward and max
+
+    q_update = q_target - self.q_table[SANRD[0], SANRD[1]]
+    self.q_table[SANRD[0], SANRD[1]] += self.LR * q_update
+
+    if SANRD[4]:
+      self.eps *= .99 # steering the algorithm towards determinism
