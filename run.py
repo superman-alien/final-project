@@ -1,4 +1,4 @@
-from maze_env import Maze
+from maze_ex import Maze
 from RL_brain import DeepQNetwork
 
 
