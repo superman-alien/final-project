@@ -1,0 +1,6 @@
+import sys
+sys.path.append('C:/Users/mkovach/Documents/Pfuncs')
+
+exec from python command line:
+
+exec(open(r'C:\Users\mkovach\Documents\cummins\processing.py').read()) 

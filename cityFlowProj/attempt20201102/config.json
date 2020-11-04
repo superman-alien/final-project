@@ -1,0 +1,12 @@
+{
+	"interval": 1.0,
+	"seed": 0,
+	"dir": "/media/sf_Shared_VM/cityFlowProj/attempt20201102/",
+	"roadnetFile": "roadnetAAAAA.json",
+	"flowFile": "flowAAAAAAA.json",
+	"rlTrafficLight": false,
+	"laneChange": false,
+	"saveReplay": true,
+	"roadnetLogFile": "replay_roadnet.json",
+	"replayLogFile": "replay.txt"
+}
